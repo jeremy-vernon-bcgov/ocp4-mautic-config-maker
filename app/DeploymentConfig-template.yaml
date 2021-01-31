@@ -12,31 +12,11 @@ metadata:
     app.openshift.io/runtime-namespace: ${NAMESPACE}
 spec:
   strategy:
-    type: Rolling
-    rollingParams:
-      updatePeriodSeconds: 1
-      intervalSeconds: 1
-      timeoutSeconds: 600
-      maxUnavailable: 25%
-      maxSurge: 25%
-    resources: {}
     activeDeadlineSeconds: 21600
-  triggers:
-    - type: ImageChange
-      imageChangeParams:
-        automatic: true
-        containerNames:
-          - ${INSTANCE}-mautic
-        from:
-          kind: ImageStreamTag
-          namespace: ${NAMESPACE}
-          name: 'docker-mautic-noroot:latest'
-        lastTriggeredImage: >-
-          image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/docker-mautic-noroot@sha256:bcf50c290835c12000882c4f89f302e81082a47bd8a9f9ca6ec3c229e76fb17e
-    - type: ConfigChange
-  replicas: 1
-  revisionHistoryLimit: 5
-  test: false
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
   selector:
     app: ${INSTANCE}-mautic
     deploymentconfig: ${INSTANCE}-mautic
@@ -53,7 +33,7 @@ spec:
       containers:
         - name: docker-mautic-noroot
           image: >-
-            image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/docker-mautic-noroot
+            docker-remote.artifacts.developer.gov.bc.ca/jeremyvernon/docker-mautic-noroot:v02
           ports:
             - containerPort: 8080
               protocol: TCP

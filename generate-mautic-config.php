@@ -16,7 +16,8 @@ $configVars = array (
     'MAILER_ENCRYPTION'             => '', //default is null
     'MAILER_USER'                   => '', //in case you wish to use an external mailer with username/password etc.
     'MAILER_PORT'                   => '587', //Default 587; standard SMTP port.  
-    'MAILER_AUTH_MODE'              => '', //TODO: enumerate possible values for auth mode. 
+    'MAILER_AUTH_MODE'              => '', //TODO: enumerate possible values for auth mode.
+    'MAILER_TRANSPORT'              => 'smtp', //Default SMTP
 );
 //TODO: There are additional parameters in the local.php configuration file - these should be included
 
