@@ -58,6 +58,24 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
+            - name: HASH_KEY
+              value: ${HASH_KEY}
+            - name: SITE_URL
+              value: http:/${INSTANCE}-mautic-${NAMESPACE}.apps.silver.devops.gov.bc.ca
+            - name: MAILER_FROM_NAME
+              value: ${MAILER_FROM_NAME}
+            - name: MAILER_FROM_EMAIL
+              value: ${MAILER_FROM_EMAIL}
+            - name: MAILER_HOST
+              value: ${MAILER_HOST}
+            - name: MAILER_USER
+              value: ${MAILER_USER}
+            - name: MAILER_PORT
+              value: ${MAILER_PORT}
+            - name: MAILER_ENCRYPTION
+              value: ${MAILER_ENCRYPTION}
+            - name: MAILER_AUTH_MODE
+              value: ${MAILER_AUTH_MODE}
             - name: MAUTIC_DB_HOST
               value: ${INSTANCE}-mautic-db
             - name: MAUTIC_DB_USER

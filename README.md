@@ -40,8 +40,8 @@ Because the application code self-mutates, you gotta do the following.
 
 1) Deploy application
 2) Run the web-installer
-3) RSYNC the /var/www/html directory
-4) Attach the PV to /var/www/html
-5) RSYNC the /var/www/html back 
+3) RSYNC the /var/www/html/media directory
+4) Attach the PV to /var/www/html/media
+5) RSYNC the /var/www/html/media back 
 
 You should only need to do this once per instance of the app. Further optimization can be performed by isolating what files can mutate vs. which are stateless - but I haven't had time.
