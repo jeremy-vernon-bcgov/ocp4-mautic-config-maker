@@ -8,6 +8,8 @@ Ensure you have an ImageStream for you Mautic configured
 
 You can pull lightly modified no-root Docker image from Artifactory or [through DockerHub](https://dockerhub.com/jeremyvernon/mautid-docker-noroot)
 
+Be warned, it's thicc because I have not optimized it even a little yet.
+
 Edit the PHP file with your desired variables
 ---------------------------------------------
 
