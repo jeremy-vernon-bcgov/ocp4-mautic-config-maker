@@ -1,0 +1,86 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  selfLink: >-
+    /apis/apps.openshift.io/v1/namespaces/${NAMESPACE}/deploymentconfigs/docker-mautic-noroot
+  name: ${INSTANCE}-mautic
+  namespace: ${NAMESPACE}
+  labels:
+    app: ${INSTANCE}-mautic
+    app.kubernetes.io/component: ${INSTANCE}-mautic
+    app.kubernetes.io/instance: ${INSTANCE}-mautic
+    app.openshift.io/runtime-namespace: ${NAMESPACE}
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - ${INSTANCE}-mautic
+        from:
+          kind: ImageStreamTag
+          namespace: ${NAMESPACE}
+          name: 'docker-mautic-noroot:latest'
+        lastTriggeredImage: >-
+          image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/docker-mautic-noroot@sha256:bcf50c290835c12000882c4f89f302e81082a47bd8a9f9ca6ec3c229e76fb17e
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 5
+  test: false
+  selector:
+    app: ${INSTANCE}-mautic
+    deploymentconfig: ${INSTANCE}-mautic
+  template:
+    metadata:
+      labels:
+        app: ${INSTANCE}-mautic
+        deploymentconfig: ${INSTANCE}-mautic
+    spec:
+      volumes:
+        - name: ${INSTANCE}-mautic
+          persistentVolumeClaim:
+            claimName: ${INSTANCE}-mautic 
+      containers:
+        - name: docker-mautic-noroot
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/${NAMESPACE}/docker-mautic-noroot
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: MAUTIC_DB_HOST
+              value: ${INSTANCE}-mautic-db
+            - name: MAUTIC_DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE}-mautic-db
+                  key: database-user
+            - name: MAUTIC_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE}-mautic-db
+                  key: database-password
+            - name: MAUTIC_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: ${INSTANCE}-mautic-db
+                  key: database-name
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler

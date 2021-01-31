@@ -1,0 +1,20 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+    pv.kubernetes.io/bound-by-controller: 'yes'
+    volume.beta.kubernetes.io/storage-provisioner: csi.trident.netapp.io
+  selfLink: /api/v1/namespaces/b07dd3-test/persistentvolumeclaims/${INSTANCE}-mautic-pvc
+  name: ${INSTANCE}-mautic-pvc
+  namespace: ${NAMESPACE}
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: netapp-file-standard
+  volumeMode: Filesystem

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    template.openshift.io/expose-uri: mysql://{.spec.clusterIP}:{.spec.ports[?(.name=="mariadb")].port}
+  labels:
+    manager: openshift-controller-manager
+  name: ${INSTANCE}-mautic-db
+  namespace: ${NAMESPACE}
+  selfLink: /api/v1/namespaces/${NAMESPACE}/services/${INSTANCE}-mautic-db
+spec:
+  clusterIP: 10.98.95.${DB_CLUSTER_IP}
+  ports:
+  - name: mariadb
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    name: ${INSTANCE}-mautic-db
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

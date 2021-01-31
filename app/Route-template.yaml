@@ -1,0 +1,21 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  selfLink: >-
+    /apis/route.openshift.io/v1/namespaces/${NAMESPACE}/routes/${INSTANCE}-mautic
+  name: ${INSTANCE}-mautic
+  namespace: ${NAMESPACE}
+  labels:
+    app: ${INSTANCE}-mautic
+    app.kubernetes.io/component: ${INSTANCE}-mautic
+    app.kubernetes.io/instance: ${INSTANCE}-mautic
+    app.openshift.io/runtime-version: latest
+spec:
+  host: ${INSTANCE}-mautic-${NAMESPACE}.apps.silver.devops.gov.bc.ca
+  to:
+    kind: Service
+    name: ${INSTANCE}-mautic
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  wildcardPolicy: None

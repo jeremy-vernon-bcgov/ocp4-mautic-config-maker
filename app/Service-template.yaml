@@ -1,0 +1,25 @@
+kind: Service
+apiVersion: v1
+metadata:
+  selfLink: /api/v1/namespaces/${NAMESPACE}/services/${INSTANCE}-mautic
+  name: ${INSTANCE}-mautic
+  namespace: b07dd3-test
+  labels:
+    app: ${INSTANCE}-mautic
+    app.kubernetes.io/component: ${INSTANCE}-mautic
+    app.kubernetes.io/instance: ${INSTANCE}-mautic
+    app.openshift.io/runtime-version: latest
+spec:
+  ports:
+    - name: 8080-tcp
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: ${INSTANCE}-mautic
+    deploymentconfig: ${INSTANCE}-mautic
+  clusterIP: 10.98.221.${CLUSTER_IP}
+  type: ClusterIP
+  sessionAffinity: None
+status:
+  loadBalancer: {}
