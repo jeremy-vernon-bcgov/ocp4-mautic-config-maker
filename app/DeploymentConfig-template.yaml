@@ -10,13 +10,18 @@ metadata:
     app.kubernetes.io/component: ${INSTANCE}-mautic
     app.kubernetes.io/instance: ${INSTANCE}-mautic
     app.openshift.io/runtime-namespace: ${NAMESPACE}
-spec:
+pec:
   strategy:
-    activeDeadlineSeconds: 21600
+    type: Recreate
     recreateParams:
       timeoutSeconds: 600
     resources: {}
-    type: Recreate
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
   selector:
     app: ${INSTANCE}-mautic
     deploymentconfig: ${INSTANCE}-mautic
@@ -27,9 +32,12 @@ spec:
         deploymentconfig: ${INSTANCE}-mautic
     spec:
       volumes:
-        - name: ${INSTANCE}-mautic
+        - name: ${INSTANCE}-mautic-config
           persistentVolumeClaim:
-            claimName: ${INSTANCE}-mautic 
+            claimName: ${INSTANCE}-mautic-config
+        - name: ${INSTANCE}-mautic-media
+          persistentVolumeClaim:
+            claimName: ${INSTANCE}-mautic-media
       containers:
         - name: docker-mautic-noroot
           image: >-
