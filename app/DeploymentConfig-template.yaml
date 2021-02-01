@@ -10,7 +10,7 @@ metadata:
     app.kubernetes.io/component: ${INSTANCE}-mautic
     app.kubernetes.io/instance: ${INSTANCE}-mautic
     app.openshift.io/runtime-namespace: ${NAMESPACE}
-pec:
+spec:
   strategy:
     type: Recreate
     recreateParams:
