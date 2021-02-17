@@ -18,21 +18,23 @@ $configVars = array (
     'MAILER_PORT'                   => '587', //Default 587; standard SMTP port.  
     'MAILER_AUTH_MODE'              => '', //TODO: enumerate possible values for auth mode.
     'MAILER_TRANSPORT'              => 'smtp', //Default SMTP
+    'MAILER_HOST'                   => 'apps.smtp.gov.bc.ca', //Default is apps.smtp.gov.bc.ca but rates and destinations may force a change.
 );
 //TODO: There are additional parameters in the local.php configuration file - these should be included
 
 
 $configFiles = array (
-    'app/PersistentVolume-template.yaml' => $configVars['INSTANCE'] . '-PersistentVolume.yaml',
+    'app/media-pvc-template.yaml'        => $configVars['INSTANCE'] . '-media-pvc.yaml',
+    'app/config-pvc-template.yaml'       => $configVars['INSTANCE'] . '-config-pvc.yaml',
     'app/DeploymentConfig-template.yaml' => $configVars['INSTANCE'] . '-DeploymentConfig.yaml',
     'app/Service-template.yaml'          => $configVars['INSTANCE'] . '-Service.yaml',
     'app/Route-template.yaml'            => $configVars['INSTANCE'] . '-Route.yaml',
+    'app/local-php.template'             => 'local.php',
     'db/PersistentVolume-template.yaml'  => $configVars['INSTANCE'] . '-db-PersistentVolume.yaml',
     'db/DeploymentConfig-template.yaml'  => $configVars['INSTANCE'] . '-db-DeploymentConfig.yaml',
     'db/Service-template.yaml'           => $configVars['INSTANCE'] . '-db-Service.yaml',
     'db/Secret-template.yaml'            => $configVars['INSTANCE'] . '-db-Secret.yaml',
 );
-//TODO : Have system ingest a directory and recursively pull all the -template.yaml files.
 
 //Simple Alias for now, may require pre-/post- steps in future.
 function getFileAsString(string $path): string {

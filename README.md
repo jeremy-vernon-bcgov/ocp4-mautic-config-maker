@@ -3,12 +3,16 @@ Mautic Config File Generators for OCP4
 
 This is a simple script to generate the yaml files for a Mautic instance in OCP4.
 
-Ensure you have an ImageStream for you Mautic configured
+Your recipe for success.
+
+Verify You Can Pull from Dockerhub or use an ImageStream
 --------------------------------------------------------
 
-You can pull lightly modified no-root Docker image from Artifactory or [through DockerHub](https://dockerhub.com/jeremyvernon/mautid-docker-noroot)
+You can pull lightly modified no-root Docker image [from Artifactory](https://developer.gov.bc.ca/Artifact-Repositories)  or [through DockerHub](https://dockerhub.com/jeremyvernon/mautid-docker-noroot)
 
-Be warned, it's thicc because I have not optimized it even a little yet.
+Be sure to check what the latest version of the docker image is, it may become synced with the version indicated in the deploymentconfig file.
+
+Be warned, the image is rill chonky (1.25 GB) because I have not yet optimized it even a little .
 
 Edit the PHP file with your desired variables
 ---------------------------------------------
@@ -22,11 +26,14 @@ YAML files should be applied and verified in sequence
 
 They should be applied (and verified) in the following order.
 
-1) DB PersistentVolume
-2) App PersistentVolume
-3) DB Secret (See Note)
-3) DB Deployment Config
-4) DB Service
+- DB PVC
+- App Config PVC
+- APP Media PVC
+- DB Secret (See Note)
+- DB Deployment Config
+- DB Service
+- App Deployment Config
+- 
 
 Secret File Needs To Be Manually Submitted
 ------------------------------------------

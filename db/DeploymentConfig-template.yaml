@@ -17,7 +17,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         name: ${INSTANCE}-mautic-db
     spec:
