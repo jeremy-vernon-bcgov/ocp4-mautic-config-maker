@@ -2,23 +2,24 @@
 
 //VARIABLES
 $configVars = array (
-    'INSTANCE'                      => 'BIG-internal', //this should indicate the client or client-project this app belongs to (e.g. ihub-f4c comms-compass). Must be lowercase alphanumeric or '-' characters (unenforced).
-    'NAMESPACE'                     => 'b07dd3-prod', //this must be one of the four provisioned namespaces, but this is not enforced here.
-    'CLUSTER_IP'                    => '175', //this must be a number between 0-255 and be unique to this namespace (?maybe to the whole cluster?)
-    'DB_CLUSTER_IP'                 => '176', //this must be a number between 0-255 and be unique to this namespace, and differemt from CLUSTER_IP
+    'INSTANCE'                      => '', //this should indicate the client or client-project this app belongs to (e.g. ihub-f4c comms-compass). Must be lowercase alphanumeric or '-' characters (unenforced).
+    'NAMESPACE'                     => '', //this must be one of the four provisioned namespaces, but this is not enforced here.
+    'CLUSTER_IP'                    => '', //this must be a number between 0-255 and be unique to this namespace (?maybe to the whole cluster?)
+    'DB_CLUSTER_IP'                 => '', //this must be a number between 0-255 and be unique to this namespace, and differemt from CLUSTER_IP
     'DATABASE_PASSWORD'             => generateStrongPassword(32),  //currently the DB secret must be created manually from the values input here - due to character encoding blah blah.
     'DATABASE_USER'                 => 'user' . generateStrongPassword(5),
     'DATABASE_ROOT_PASSWORD'        => generateStrongPassword(32),
     'DATABASE_NAME'                 => 'mautic',
     'HASH_KEY'                      => '7bdc46b5a52f8725dd834dc8f125ff52452c9b08129553d6785aa5869383a9c5', //TODO: write function to generate this value.
-    'MAILER_FROM_NAME'              => 'Behavioural Insights Group', //This should be the name of the client org - it's overridable in the OCP4 admin.
-    'MAILER_FROM_EMAIL'             => 'no-reply@gov.bc.ca', //The default is no-reply@gov.bc.ca
+    'MAILER_FROM_NAME'              => '', //This should be the name of the client org - it's overridable in the OCP4 admin.
+    'MAILER_FROM_EMAIL'             => '', //The default is no-reply@gov.bc.ca
     'MAILER_ENCRYPTION'             => '', //default is null
     'MAILER_USER'                   => '', //in case you wish to use an external mailer with username/password etc.
     'MAILER_PORT'                   => '587', //Default 587; standard SMTP port.  
     'MAILER_AUTH_MODE'              => '', //TODO: enumerate possible values for auth mode.
     'MAILER_TRANSPORT'              => 'smtp', //Default SMTP
     'MAILER_HOST'                   => 'apps.smtp.gov.bc.ca', //Default is apps.smtp.gov.bc.ca but rates and destinations may force a change.
+    'SITE_URL'                      => '' //Default is [instance]-mautic-[namespace].
 );
 //TODO: There are additional parameters in the local.php configuration file - these should be included
 
